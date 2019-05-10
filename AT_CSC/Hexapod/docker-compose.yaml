@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+        HexapodCSC:
+                image: lsstts/ts_athexapod
+                environment:
+                        - LSST_DDS_DOMAIN=${LSST_DDS_DOMAIN}
+                network_mode: "host"
+                volumes:
+                        - ${OSPL_CONFIG_PATH}:${OSPL_MOUNT_POINT}
+                        - ./startCSC.sh:/home/saluser/startCSC.sh
+                        - ./tcpConfiguration.yaml:/home/saluser/repos/ts_salobjATHexapod/bin/settingFiles/Test/1/tcpConfiguration.yaml
+                entrypoint: ["/home/saluser/startCSC.sh"]
+        HexapodGUI:
+                image: lsstts/ts_athexapod
+                environment:
+                        - LSST_DDS_DOMAIN=${LSST_DDS_DOMAIN}
+                        - DISPLAY=139.229.136.136:0
+                network_mode: "host"
+                volumes:
+                        - ${OSPL_CONFIG_PATH}:${OSPL_MOUNT_POINT}
+                        - ./startGUI.sh:/home/saluser/startGUI.sh
+                        - ./tcpConfiguration.yaml:/home/saluser/repos/ts_salobjATHexapod/bin/settingFiles/Test/1/tcpConfiguration.yaml
+                entrypoint: ["/home/saluser/startGUI.sh"]

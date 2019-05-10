@@ -1,0 +1,101 @@
+version: "3"
+
+services:
+        EFD_Updater:
+                image: lsstts/efd_writers
+                volumes:
+                        - ./efd_population.sh:/home/saluser/efd_population.sh
+                entrypoint: ["/home/saluser/efd_population.sh"]
+
+        EFD_MariaDB:
+                image: mariadb:latest
+                ports: 
+                        - "3306:3306"
+                environment:
+                        - MYSQL_ROOT_PASSWORD=lssttest
+                        - MYSQL_DATABASE=EFD
+                        - MYSQL_USER=efduser
+                        - MYSQL_PASSWORD=lssttest
+                restart: on-failure
+                #volumes:
+                        #- ${PWD}/mariadb:/var/lib/mysql
+        EFD_ATDome:
+                image: lsstts/efd_writers
+                environment:
+                        - LSST_DDS_DOMAIN=${LSST_DDS_DOMAIN}
+                        - LSST_EFD_HOST=${LSST_EFD_HOST}
+                        - LSST_KAFKA_BROKERS=localhost
+                network_mode: "host"
+                volumes:
+                        - ${OSPL_CONFIG_PATH}:${OSPL_MOUNT_POINT}
+                        - ./efd_writers.sh:/home/saluser/efd_writers.sh
+                entrypoint: ["/home/saluser/efd_writers.sh", "ATDome", "efdwriter"]
+        EFD_ATHexapod:
+                image: lsstts/efd_writers
+                environment:
+                        - LSST_DDS_DOMAIN=${LSST_DDS_DOMAIN}
+                        - LSST_EFD_HOST=${LSST_EFD_HOST}
+                        - LSST_KAFKA_BROKERS=localhost
+                network_mode: "host"
+                volumes:
+                        - ${OSPL_CONFIG_PATH}:${OSPL_MOUNT_POINT}
+                        - ./efd_writers.sh:/home/saluser/efd_writers.sh
+                entrypoint: ["/home/saluser/efd_writers.sh" , "ATHexapod" , "efdwriter"]
+
+        EFD_ATMCS:
+                image: lsstts/efd_writers
+                environment:
+                        - LSST_DDS_DOMAIN=${LSST_DDS_DOMAIN}
+                        - LSST_EFD_HOST=${LSST_EFD_HOST}
+                        - LSST_KAFKA_BROKERS=localhost
+                network_mode: "host"
+                volumes:
+                        - ${OSPL_CONFIG_PATH}:${OSPL_MOUNT_POINT}
+                        - ./efd_writers.sh:/home/saluser/efd_writers.sh
+                entrypoint: ["/home/saluser/efd_writers.sh" , "ATMCS" , "efdwriter"]
+        EFD_ATptg:
+                image: lsstts/efd_writers
+                environment:
+                        - LSST_DDS_DOMAIN=${LSST_DDS_DOMAIN}
+                        - LSST_EFD_HOST=${LSST_EFD_HOST}
+                        - LSST_KAFKA_BROKERS=localhost
+                network_mode: "host"
+                volumes:
+                        - ${OSPL_CONFIG_PATH}:${OSPL_MOUNT_POINT}
+                        - ./efd_writers.sh:/home/saluser/efd_writers.sh
+                entrypoint: ["/home/saluser/efd_writers.sh" , "ATPtg" , "efdwriter"]
+        EFD_ATDomeTrajectory:
+                image: lsstts/efd_writers
+                environment:
+                        - LSST_DDS_DOMAIN=${LSST_DDS_DOMAIN}
+                        - LSST_EFD_HOST=${LSST_EFD_HOST}
+                        - LSST_KAFKA_BROKERS=localhost
+                network_mode: "host"
+                volumes:
+                        - ${OSPL_CONFIG_PATH}:${OSPL_MOUNT_POINT}
+                        - ./efd_writers.sh:/home/saluser/efd_writers.sh
+                entrypoint: ["/home/saluser/efd_writers.sh" , "ATDomeTrajectory" , "efdwriter"]
+        EFD_ATPneumatics:
+                image: lsstts/efd_writers
+                environment:
+                        - LSST_DDS_DOMAIN=${LSST_DDS_DOMAIN}
+                        - LSST_EFD_HOST=${LSST_EFD_HOST}
+                        - LSST_KAFKA_BROKERS=localhost
+                network_mode: "host"
+                volumes:
+                        - ${OSPL_CONFIG_PATH}:${OSPL_MOUNT_POINT}
+                        - ./efd_writers.sh:/home/saluser/efd_writers.sh
+                entrypoint: ["/home/saluser/efd_writers.sh" , "ATPneumatics" , "efdwriter"]
+        EFD_ATAOS:
+                image: lsstts/efd_writers
+                environment:
+                        - LSST_DDS_DOMAIN=${LSST_DDS_DOMAIN}
+                        - LSST_EFD_HOST=${LSST_EFD_HOST}
+                        - LSST_KAFKA_BROKERS=localhost
+                network_mode: "host"
+                volumes:
+                        - ${OSPL_CONFIG_PATH}:${OSPL_MOUNT_POINT}
+                        - ./ospl.xml:/opt/OpenSpliceDDS/V6.9.0/HDE/x86_64.linux/etc/config/ospl.xml
+                        - ./efd_writers.sh:/home/saluser/efd_writers.sh
+                entrypoint: ["/home/saluser/efd_writers.sh" , "ATAOS" , "efdwriter"]
+ 
