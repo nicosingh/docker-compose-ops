@@ -69,6 +69,7 @@ It is using image: lsstts/ts_athexapod, it has to definitions, one for the CSC a
 
 ## Electrometer
 It is using image: lsstts/electrometer, it has two definitions, one for the CSC and the other to lunch a GUI. The display variable defined in the GUI container must be pointed to the host that will receive the image, if that will be your computer, then write your IP in that variable. Entrypoints has been modified, the CSC is starting with a custom scripts called startCSC.sh whereas the GUI container is starting with a custom script called startGUI.sh. Those scripts has all the required configuration plus starting the software we need from the container.
+The port for the electrometer had to be added following the instructions in: https://confluence.lsstcorp.org/display/LTS/Setting+up+a+serial+port
 
 # AT_EFD
 
