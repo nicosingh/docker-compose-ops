@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+        ElectrometerCSC:
+                image: lsstts/electrometer
+                environment:
+                        - LSST_DDS_DOMAIN=${LSST_DDS_DOMAIN}
+                network_mode: "host"
+                volumes:
+                        - ${OSPL_CONFIG_PATH}:${OSPL_MOUNT_POINT}
+                        - ./startCSC.sh:/home/saluser/startCSC.sh
+                        - ./mainSetup.yaml:/home/saluser/repos/ts_electrometer2/bin/settingFiles/mainSetup.yaml
+                        - /dev/electrometer:/dev/electrometer
+                entrypoint: ["/home/saluser/startCSC.sh"]
+        ElectrometerGUI:
+                image: lsstts/electrometer
+                environment:
+                        - LSST_DDS_DOMAIN=${LSST_DDS_DOMAIN}
+                        - DISPLAY=${DISPLAY}
+                network_mode: "host"
+                volumes:
+                        - ${OSPL_CONFIG_PATH}:${OSPL_MOUNT_POINT}
+                        - ./startGUI.sh:/home/saluser/startGUI.sh
+                        - /tmp/.X11-unix:/tmp/.X11-unix
+                        - ./mainSetup.yaml:/home/saluser/repos/ts_electrometer2/bin/settingFiles/mainSetup.yaml
+                entrypoint: ["/home/saluser/startGUI.sh"]
