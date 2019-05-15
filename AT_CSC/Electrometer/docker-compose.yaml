@@ -15,10 +15,11 @@ services:
                 image: lsstts/electrometer
                 environment:
                         - LSST_DDS_DOMAIN=${LSST_DDS_DOMAIN}
-                        - DISPLAY=139.229.136.136:0
+                        - DISPLAY=${DISPLAY}
                 network_mode: "host"
                 volumes:
                         - ${OSPL_CONFIG_PATH}:${OSPL_MOUNT_POINT}
                         - ./startGUI.sh:/home/saluser/startGUI.sh
+                        - /tmp/.X11-unix:/tmp/.X11-unix
                         - ./mainSetup.yaml:/home/saluser/repos/ts_electrometer2/bin/settingFiles/mainSetup.yaml
                 entrypoint: ["/home/saluser/startGUI.sh"]

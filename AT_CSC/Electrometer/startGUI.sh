@@ -14,7 +14,7 @@ setup ts_xml -t current
 setup ts_sal -t current
 setup ts_salobj -t current
 setup ts_scriptqueue -t current
-setup ts_electrometer2 -t current
+setup ts_electrometer -t current
 cd /home/saluser/repos/ts_electrometer2/python/lsst/ts/electrometer/electrometerEUI
 echo "# Starting GUI"
 python ./EUI.py
