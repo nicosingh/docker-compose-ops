@@ -18,4 +18,3 @@ setup ts_salobj -t current
 setup ts_scriptqueue -t current
 setup ts_config_attcs -t current
 
-setup ts_ATDome -t $USER 
