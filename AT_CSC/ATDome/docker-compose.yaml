@@ -11,6 +11,6 @@ services:
         network_mode: "host"
         volumes:
             - ${OSPL_CONFIG_PATH}:${OSPL_MOUNT_POINT}
- 
+            - .setup.sh:/home/saluser/.setup.sh 
         entrypoint: ["/home/saluser/.setup.sh"]
 
