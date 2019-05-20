@@ -10,6 +10,8 @@ services:
                         - ${OSPL_CONFIG_PATH}:${OSPL_MOUNT_POINT}
                         - ./startCSC.sh:/home/saluser/startCSC.sh
                         - ./mainSetup.yaml:/home/saluser/repos/ts_electrometer2/bin/settingFiles/mainSetup.yaml
+                devices:
+                        - /dev/ttyUSB0:/dev/ttyUSB0
                         - /dev/electrometer:/dev/electrometer
                 entrypoint: ["/home/saluser/startCSC.sh"]
         ElectrometerGUI:
