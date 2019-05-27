@@ -50,7 +50,7 @@ services:
         entrypoint: ["/home/saluser/.setup.sh"]
 
     ataos-sim:
-        image: lsstts/ataos:v0.2.1
+        image: lsstts/ataos:v1.0.0
         container_name: ataos-sim
         environment:
             - OSPL_URI=${OSPL_URI}
@@ -62,7 +62,7 @@ services:
         entrypoint: ["/home/saluser/.setup.sh"]
   
     atptg-sim:
-        image: tiagorib/ptkernel:new_xml
+        image: tiagorib/ptkernel:develop
         container_name: atptg-sim
         environment:
             - OSPL_URI=${OSPL_URI}
@@ -70,7 +70,24 @@ services:
         network_mode: "host"
         volumes:
             - ${OSPL_CONFIG_PATH}:${OSPL_MOUNT_POINT}
+
+    hexapod-sim:
+        image: couger01/hexapod_simulator
+        container_name: hexapod-sim
+        network_mode: "host"
  
+    athexapod-sim:
+      image: lsstts/ts_athexapod:3.9-dm-19762
+      container_name: athexapod-sim
+      environment:
+        - OSPL_URI=${OSPL_URI}
+        - LSST_DDS_DOMAIN=${LSST_DDS_DOMAIN}
+      network_mode: "host"
+      volumes:
+        - ${OSPL_CONFIG_PATH}:${OSPL_MOUNT_POINT}
+        - ./startCSC.sh:/home/saluser/startCSC.sh
+        - ./tcpConfiguration.yaml:/home/saluser/repos/ts_salobjATHexapod/bin/settingFiles/Test/1/tcpConfiguration.yaml
+      entrypoint: ["/home/saluser/startCSC.sh"]
 
     simulation-tests:
          image: lsstts/simulation_tests:latest
